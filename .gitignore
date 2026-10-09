@@ -1,3 +1,6 @@
 
 img/.DS_Store
 .DS_Store
+*.bak_*
+pg_collector_original_backup.sql
+pg_collector_report.html

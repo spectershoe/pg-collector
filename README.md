@@ -1,5 +1,12 @@
 # PG Collector  <img src="img/pg_collector_logo.png" align="right" alt="">
 
+## 主要改动：
+
+1. 改进原脚本部分内容只能巡检当前连接库：通过实例级脚本pg_collector.sql和数据库级脚本pg_collect_perdb.sql将汇总结果分为实例级和数据库级2部分，并且自动巡检所有数据库。
+2. 改进原脚本只有巡检内容：增加告警和提醒项，让结果需要关注的内容更加直观，不需要在从头到尾去分析每一项结果。
+3. 改进原脚本部分巡检项会罗列所有内容，结果内容过大：罗列TOP20。
+4. 增删了部分巡检项。
+
 ## Overview
 
 PG Collector for [Postgresql](https://www.postgresql.org/) is a sql script that gathers valuable database information and presents it in a consolidated HTML file which provides a convenient way to view and navigate between different sections of the report.
@@ -7,6 +14,7 @@ PG Collector for [Postgresql](https://www.postgresql.org/) is a sql script that 
 PG Collector is safe to run on production environments and does not create any database objects to produce the output.
 
 With PG Collector an operator gains insights on various aspects of the database, such as:
+
 * Database size
 * Configuration parameters
 * Installed extensions
@@ -35,6 +43,7 @@ The observations section seamlessly integrates with existing PG Collector report
 more health checks will be added with each new version . 
 
 Database Health check list :
+
 ```
    1- Duplicate indexes
    2- Invalid indexes
@@ -56,6 +65,7 @@ Database Health check list :
    18- Logical replication spill files
    19- Outdated Extensions
 ```
+
 ### Example of The Observations section
 
 <img src="img/Observations_section.png" alt="">   
@@ -80,17 +90,17 @@ select PG Collector version that match your PostgreSQL major version
 ## How to check PG Collector version ?
 
 - from the PG Collector report header  
-<img src="img/PG_Collector_report_header_version.png" alt="">
+  
+  <img src="img/PG_Collector_report_header_version.png" alt="">
 
 - from the PG Collector script header
-<img src="img/PG_Collector_script_header.png" alt=""> 
+  <img src="img/PG_Collector_script_header.png" alt=""> 
 
-## PG Collector report header 
+## PG Collector report header
+
 <img src="img/pg_collector_header_V2.6.png" alt="">
 
-
-
-## Example of PG Collector report 
+## Example of PG Collector report
 
 [pg_collector v2.9](http://pg-collector.s3-website-us-west-2.amazonaws.com/pg_collector_postgres-2021-08-02_181348.html)
 
@@ -98,10 +108,10 @@ select PG Collector version that match your PostgreSQL major version
 
 All Sample reports in [sample report folder](https://github.com/awslabs/pg-collector/tree/main/sample_reports).
 
-
 ## PG Collector output
 
 ### Report name:
+
 PG Collector script will generate HTML file using the following naming convention pg_collector_[DB Name]-[timestamp].html .
 
 [DB Name] : is the database name that you are connected to.
@@ -110,11 +120,9 @@ PG Collector script will generate HTML file using the following naming conventio
 Example : pg_collector_testdb-2020-10-10_030920.html
 ```
 
+### Report location:
 
-### Report location: 
 PG Collector script will generate HTML file  under [/tmp](https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/tmp.html) directory. 
-
-
 
 ## How to run PG Collector script ( pg_collector.sql )
 
@@ -123,15 +131,18 @@ PG Collector script will generate HTML file  under [/tmp](https://tldp.org/LDP/L
 2- Download pg_collector.sql in your laptop or the host that want to access the database from 
 
 3- login to the database using psql 
+
 ```
 psql -h [hostname or RDS endpoint] -p [Port] -d [Database name ] -U [user name] 
 ```
+
 4- run the pg_collector.sql script 
 
 ```
 \i pg_collector.sql 
 \q
 ```
+
 or use -f option in psql 
 
 ```
@@ -157,13 +168,12 @@ Report name and location:  /tmp/pg_collector_testdb-2019-10-07_215146.html
 testdb=> \q
 mohamed@mydevhost ~ %ls -lhrt /tmp/pg_collector_*
 -rw-r--r-- 1 mohamed mohamed 569K Oct  7 21:51 /tmp/pg_collector_testdb-2019-10-07_215146.html
-
 ```
+
 5-  open the report using any internet browser
 
-
-
 ## Notes:
+
 1- It is ok to see below errors while executing the pg_collector.sql script if you did not install pg_stat_statements extension
 
 ```
@@ -189,7 +199,6 @@ postgres=> \q
 use statement_timeout to Abort any statement that takes more than the specified number of milliseconds.
 please check below example .  
 
-
 ```
 postgres=> set statement_timeout=30000;
 SET
@@ -198,7 +207,6 @@ Output format is html.
 Report name and location: /tmp/pg_collector_postgres-2021-07-22_194944.html
 psql:pg_collector.sql:1442: ERROR:  canceling statement due to statement timeout
 postgres=>
-
 ```
 
 3- It is acceptable to observe the following errors while executing the pg_collector.sql script on Amazon Aurora PostgreSQL if the Cluster Cache Manager is disabled.
@@ -210,7 +218,6 @@ psql:/tmp/pg_collector.sql:2766: ERROR: Cluster Cache Manager is disabled
 psql:/tmp/pg_collector.sql:2769: ERROR: Cluster Cache Manager is disabled
 Report Generated Successfully
 Report name and location: /tmp/pg_collector_postgres-2024-09-09_161216.html
-
 ```
 
 # License
