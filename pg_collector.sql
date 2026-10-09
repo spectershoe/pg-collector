@@ -19,7 +19,7 @@
 -- |  MUST run before the report \o below, because \o truncates on open.        |
 -- +----------------------------------------------------------------------------+
 -- 设置目录
-\set collector_dir /home/postgres/pg-collector-3
+\set collector_dir ./
 \pset format unaligned
 \t on
 \o /tmp/pg_collector_loop.sql
